@@ -33,6 +33,10 @@ app.use(cors());
    
         
 // })
+//----------------------------------------------------
+app.get('/',(req,res)=>{
+    res.send('welcome')
+})
 app.post("/register",(req,res)=>{
     try {
         console.log(req.body)
