@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import Edit from './Edit';
 
 const EmployeeList = () => {
-    const URI="http://localhost:4000"
+    const URI= process.env.REACT_APP_API_URL;
+
     const[empList,setEmpList]=useState([])
     useEffect(()=>{
         axios.get(URI+"/employees")

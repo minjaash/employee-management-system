@@ -5,7 +5,8 @@ import { useNavigate,Link, Outlet} from "react-router-dom"
 
 
 const Profile = () => {
-  const URI="http://localhost:4000"
+  const URI= process.env.REACT_APP_API_URL;
+
   const[userData,setUserData]=useState({})
   const navigate=useNavigate()
   useEffect(()=>{

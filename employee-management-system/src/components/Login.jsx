@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const navigate=useNavigate()
 
-  const URI="http://localhost:4000"
+  const URI= process.env.REACT_APP_API_URL;
+
   const[values,setValues]=useState({uname:"",password:""})
   const changeHandler=(event)=>{
     const{name,value}=event.target

@@ -4,7 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Edit = () => {
   const {id}=useParams();
   
-  const URI="http://localhost:4000"
+  const URI= process.env.REACT_APP_API_URL;
+
   const navigate=useNavigate()
   
   const[values,setValues]=useState({uname:"",email:"",password:"",jobTitle:"",hireDate:Date,department:"",contact:"" })
