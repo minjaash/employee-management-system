@@ -31,10 +31,10 @@ function App() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/profile' element={<Profile/>}>
             
-            <Route path='/profile/Employee' element={<EmployeeList/>}/>
+            <Route path='/profile/employeeList' element={<EmployeeList/>}/>
             </Route>
             <Route path="/edit/:id" element={<Edit/>}/>
-            <Route path="/delete" element={<Delete/>}/>
+            <Route path="/delete/:id" element={<Delete/>}/>
             
           </Routes>
           

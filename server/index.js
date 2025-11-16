@@ -136,6 +136,31 @@ app.post("/Employee",(req,res)=>{
     .catch(err=>console.log(err))
    
  })
+ //=================================================================
+ app.delete("/deleteEmployee", (req, res) => {
+  mongoose.connect(MONGO_URI)
+    .then(() => {
+      const empId = req.query.id || req.body.id;
+
+      if (!empId) {
+        return res.status(400).json({ message: "Employee ID is required" });
+      }
+
+      Employee.findByIdAndDelete(empId)
+        .then(result => {
+          if (!result) {
+            return res.status(404).json({ message: "Employee not found" });
+          }
+          res.json({ message: "Employee deleted successfully", deleted: result });
+        })
+        .catch(err => {
+          console.error("Error deleting employee", err);
+          res.status(500).json({ error: err.message });
+        });
+    })
+});
+
+
 
 //======================================================================
 

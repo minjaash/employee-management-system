@@ -53,7 +53,7 @@ const Profile = () => {
 
     </div>     
      <div className='"position-relative top-50 start-50 '><button className="btn btn-danger" onClick={clickHandler}> Logout</button></div>
-    <div><button className="btn btn-info mt-3"><Link to="/profile/Employee"> EmployeesList</Link></button></div>
+    <div><button className="btn btn-info mt-3"><Link to="/profile/employeeList"> EmployeesList</Link></button></div>
     <div> 
       <Outlet></Outlet>
     </div>
