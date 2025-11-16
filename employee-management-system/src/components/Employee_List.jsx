@@ -1,10 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Edit from './Edit';
 
 const EmployeeList = () => {
     const URI= process.env.REACT_APP_API_URL;
+   
 
     const[empList,setEmpList]=useState([])
     useEffect(()=>{

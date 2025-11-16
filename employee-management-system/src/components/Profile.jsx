@@ -1,14 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useNavigate,Link, Outlet} from "react-router-dom"
+import { useNavigate,Link, Outlet, useLocation} from "react-router-dom"
 
 
 
 const Profile = () => {
   const URI= process.env.REACT_APP_API_URL;
-
+  const location = useLocation();
   const[userData,setUserData]=useState({})
   const navigate=useNavigate()
+  
   useEffect(()=>{
     const token=localStorage.getItem('user')
     
@@ -32,9 +33,8 @@ const Profile = () => {
       // })
       // .catch(err=>console.log("user not found"))
     }
-  },[])
-  
-  
+  },[location.pathname,userData])
+ 
   const clickHandler=()=>{
     localStorage.removeItem("user")
     navigate("/")

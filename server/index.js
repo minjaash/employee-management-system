@@ -87,7 +87,7 @@ app.post("/userData",(req,res)=>{
    
   const authHeader=req.header('Authorization')
     if (!authHeader||!authHeader.startsWith("Bearer")){
-        res.json({message:"unauthorized access"})
+       return res.json({message:"unauthorized access"})
     }
     const token=authHeader.replace("Bearer ", "")
     const decoded=jwt.verify(token, JWT_SECRET_KEY)

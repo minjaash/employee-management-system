@@ -40,6 +40,8 @@ const Edit = () => {
    axios.post(URI + "/update",values)
    .then(res=>{
     console.log("dbres", res)
+    alert('record edited succesfully');
+    navigate('/profile/employeeList')
     //navigate("/profile/Employee")
         
    })
