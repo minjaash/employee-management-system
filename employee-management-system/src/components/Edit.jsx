@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 const Edit = () => {
   const {id}=useParams();
+
+
   
   const URI= process.env.REACT_APP_API_URL;
 
@@ -25,24 +27,24 @@ const Edit = () => {
      setValues(res.data)
      console.log(values)
     }).catch(err=>console.log("error occured"))
-  },[]
-)
+  },[])
+
 
   const changeHandler=(event)=>{
     const {name,value}=event.target;
      setValues({...values,[name]:value})
-
-    
- }
+      }
  const submitHandler=(event)=>{
   event.preventDefault();
   console.log(values)
    axios.post(URI + "/update",values)
    .then(res=>{
     console.log("dbres", res)
-    alert('record edited succesfully');
-    navigate('/profile/employeeList')
-    //navigate("/profile/Employee")
+
+
+     setTimeout(() => {
+        navigate('/profile/employeeList');
+      }, 1500);
         
    })
    .catch(error=>console.error(error.message))
@@ -103,8 +105,12 @@ const Edit = () => {
     </div>
      <button type='submit' className='btn btn-success'>submit</button>
 </form>
+
 </div>
-  )
-}
+
+)}
+
+
+
 
 export default Edit
