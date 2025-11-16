@@ -33,7 +33,7 @@ const Profile = () => {
       // })
       // .catch(err=>console.log("user not found"))
     }
-  },[location.pathname,userData])
+  },[location.pathname,userData])//location.pathname,userData for refetching everytime url changes from profile to edit or delete.
  
   const clickHandler=()=>{
     localStorage.removeItem("user")
