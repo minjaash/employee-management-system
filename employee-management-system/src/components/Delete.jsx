@@ -10,9 +10,6 @@ const Delete = () => {
 
   const [employee, setEmployee] = useState(null);
 
-  // ---------------------------
-  // FETCH EMPLOYEE DETAILS HERE
-  // ---------------------------
   useEffect(() => {
     if (!token) {
       alert("Unauthorized. Please login first.");
@@ -21,68 +18,48 @@ const Delete = () => {
     }
 
     axios.post(`${URI}/Employee`, { id })
-      .then(res => {
-        setEmployee(res.data);
-        console.log(res.data)
-      })
-      .catch(err => {
-        console.error("Error fetching employee", err);
-      });
-
+      .then(res => setEmployee(res.data))
+      .catch(err => console.error("Error fetching employee", err));
   }, [id, navigate, token, URI]);
 
-
-  // ---------------------------
-  // DELETE EMPLOYEE FUNCTION
-  // ---------------------------
- const HandleDelete = (id) => {
-  axios.delete(`${URI}/deleteEmployee?id=${id}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  .then(res => {
-    // Check if the deleted ID is same as logged-in user's ID
-    if (employee && employee._id === id) {
-      // user deleted their own profile
-      alert("Your profile is deleted. Please register again.");
-      localStorage.removeItem("user");
-      navigate("/register");
-    } else {
-      alert("Employee deleted successfully");
-      navigate('/profile/employeeList');
-    }
-  })
-  .catch(err => {
-    console.error("Error deleting employee", err);
-    alert("Failed to delete employee");
-    navigate("/profile/employeeList");
-  });
-};
+  const HandleDelete = (id) => {
+    axios.delete(`${URI}/deleteEmployee?id=${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => {
+      const loggedInUserId = localStorage.getItem("userId");
+      if (loggedInUserId === id) {
+        // Deleted own profile
+        alert("Your profile has been deleted.");
+        localStorage.clear();
+        navigate("/register");
+      } else {
+        alert("Employee deleted successfully");
+        navigate('/profile/employeeList');
+      }
+    })
+    .catch(err => {
+      console.error("Error deleting employee", err);
+      alert("Failed to delete employee");
+      navigate("/profile/employeeList");
+    });
+  };
 
   return (
     <div className="container mt-5">
-
       <h3 className="text-danger mb-3">Delete Employee</h3>
-
       <div className="card p-3">
-
         <p>
           {employee ? (
-            <>
-              Are you sure you want to delete <strong>{employee.uname}</strong>?
-            </>
+            <>Are you sure you want to delete <strong>{employee.uname}</strong>?</>
           ) : (
             "Loading employee details..."
           )}
         </p>
-
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary me-2" onClick={() => navigate(-1)}>Cancel</button>
-
-          <button type="button" className="btn btn-danger" onClick={() => HandleDelete(id)}>
-            Delete
-          </button>
+          <button type="button" className="btn btn-danger" onClick={() => HandleDelete(id)}>Delete</button>
         </div>
-
       </div>
     </div>
   );
