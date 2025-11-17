@@ -35,21 +35,28 @@ const Delete = () => {
   // ---------------------------
   // DELETE EMPLOYEE FUNCTION
   // ---------------------------
-  const HandleDelete = (id) => {
-
-   axios.delete(`${URI}/deleteEmployee?id=${id}`, {
-  headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(res => {
-        alert("Employee deleted successfully");
-        navigate('/profile/employeeList');
-      })
-      .catch(err => {
-        console.error("Error deleting employee", err);
-        alert("Failed to delete employee");
-        navigate("/profile/employeeList");
-      });
-  };
+ const HandleDelete = (id) => {
+  axios.delete(`${URI}/deleteEmployee?id=${id}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(res => {
+    // Check if the deleted ID is same as logged-in user's ID
+    if (employee && employee._id === id) {
+      // user deleted their own profile
+      alert("Your profile is deleted. Please register again.");
+      localStorage.removeItem("user");
+      navigate("/register");
+    } else {
+      alert("Employee deleted successfully");
+      navigate('/profile/employeeList');
+    }
+  })
+  .catch(err => {
+    console.error("Error deleting employee", err);
+    alert("Failed to delete employee");
+    navigate("/profile/employeeList");
+  });
+};
 
   return (
     <div className="container mt-5">
