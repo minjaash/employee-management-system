@@ -11,37 +11,24 @@ const Delete = () => {
   const [employee, setEmployee] = useState(null);
 
   useEffect(() => {
-    if (!token) {
-      alert("Unauthorized. Please login first.");
-      navigate("/login");
-      return;
-    }
+    if (!token) return navigate("/login");
 
     axios.post(`${URI}/Employee`, { id })
-      .then(res => setEmployee(res.data))
-      .catch(err => console.error("Error fetching employee", err));
-  }, [id, navigate, token, URI]);
+    .then(res => setEmployee(res.data));
+     }, [id]);
 
-  const HandleDelete = (id) => {
+  const HandleDelete = () => {
     axios.delete(`${URI}/deleteEmployee?id=${id}`, {
       headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(res => {
-      const loggedInUserId = localStorage.getItem("userId");
-      if (loggedInUserId === id) {
-        // Deleted own profile
-        alert("Your profile has been deleted.");
+    }).then(() => {
+      const loggedId = localStorage.getItem("userId");
+
+      if (loggedId === id) {
         localStorage.clear();
-        navigate("/register");
+        navigate("/login");
       } else {
-        alert("Employee deleted successfully");
-        navigate('/profile/employeeList');
+        navigate("/profile/employeeList");
       }
-    })
-    .catch(err => {
-      console.error("Error deleting employee", err);
-      alert("Failed to delete employee");
-      navigate("/profile/employeeList");
     });
   };
 
@@ -56,9 +43,10 @@ const Delete = () => {
             "Loading employee details..."
           )}
         </p>
+
         <div className="modal-footer">
-          <button type="button" className="btn btn-secondary me-2" onClick={() => navigate(-1)}>Cancel</button>
-          <button type="button" className="btn btn-danger" onClick={() => HandleDelete(id)}>Delete</button>
+          <button className="btn btn-secondary me-2" onClick={() => navigate(-1)}>Cancel</button>
+          <button className="btn btn-danger" onClick={HandleDelete}>Delete</button>
         </div>
       </div>
     </div>

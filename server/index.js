@@ -179,34 +179,27 @@ app.get("/Employees",(req,res)=>{
     .catch(err=>console.log(err))
    
  })
+app.post("/update", async (req, res) => {
+  const { _id, name, email, age, position, password } = req.body;
 
- //=====================================================================
- app.post("/update",(req,res)=>{
-    console.log("employee to update",req.body)
-    mongoose.connect(MONGO_URI)
-    .then(dbres=>{
-       Employee.findById({_id:req.body._id})
-       .then(updateEmployee=>{
-        updateEmployee.uname=req.body.uname ||updateEmployee.uname
-        updateEmployee.email = req.body.email || updateEmployee.email;
-        updateEmployee.password = req.body.password || updateEmployee.password;
-        updateEmployee.jobTitle = req.body.jobTitle || updateEmployee.jobTitle;
-        updateEmployee.hireDate = req.body.hireDate || updateEmployee.hireDate;
-        updateEmployee.department = req.body.department || updateEmployee.department;
-        updateEmployee.contact = req.body.contact || updateEmployee.contact;
-        updateEmployee.save()
-            .then(doc=>res.send(doc))
-            .catch(err=>console.log(err))
-       })
-       .catch(err=>{
-        console.log(err)
-       })
-           
-    })
-    .catch(err=>console.log(err))
- })
+  const employee = await Employee.findById(_id);
+  if (!employee) return res.status(404).json({ message: "User not found" });
 
- 
+  // Manually update fields
+  if (name) employee.name = name;
+  if (email) employee.email = email;
+  if (age) employee.age = age;
+  if (position) employee.position = position;
+
+  // Update password if provided
+  if (password && password.trim() !== "") {
+    employee.password = await bcrypt.hash(password, 10);
+  }
+
+  const updatedEmployee = await employee.save();
+  res.json(updatedEmployee);
+});
+
  
 app.listen(port ,(req,res)=>{
     console.log ("server is running in port 4000");
