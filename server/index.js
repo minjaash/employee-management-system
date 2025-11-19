@@ -14,7 +14,10 @@ const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 app.use(express.json())
 app.use(cors({
-  origin: "https://empmanagersystem.netlify.app",
+  origin: [
+    "http://localhost:3000",            // React local development
+    "https://empmanagersystem.netlify.app" // Your deployed frontend
+  ],
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization"
 }));
@@ -183,16 +186,20 @@ app.get("/Employees",(req,res)=>{
    
  })
 app.post("/update", async (req, res) => {
-  const { _id, name, email, age, position, password } = req.body;
+  const { _id,uname,email,jobTitle,hireDate,department,contact } = req.body;
 
   const employee = await Employee.findById(_id);
   if (!employee) return res.status(404).json({ message: "User not found" });
 
   // Manually update fields
-  if (name) employee.name = name;
+  if(_id) employee._id=_id
+  if (uname) employee.uname = uname;
   if (email) employee.email = email;
-  if (age) employee.age = age;
-  if (position) employee.position = position;
+   if (password) employee.password = password;
+  if (jobTitle) employee.jobTitle = jobTitle;
+  if (hireDate) employee.hireDate = hireDate;
+  if (department) employee.department = department;
+  if (contact) employee.contact = contact;
 
   // Update password if provided
   if (password && password.trim() !== "") {
