@@ -15,11 +15,11 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 app.use(express.json())
 app.use(cors({
   origin: [
-    "http://localhost:3000",            // React local development
+             // React local development
     "https://empmanagersystem.netlify.app" // Your deployed frontend
   ],
   methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization"
+  
 }));
 
 // app.post("/register",async(req,res)=>{
@@ -51,17 +51,16 @@ app.post("/register",(req,res)=>{
         then(dbres=>{
             
             const employee=new Employee(employeeDetails)
-            employee.save().
-            then(dbres=>{console.log("emp saved",dbres)
+            employee.save()
+            .then(dbres=>{console.log("emp saved",dbres)
                 console.log( "registered user",employee.uname)
                const token=jwt.sign({uname_:dbres.uname},JWT_SECRET_KEY)
                console.log("from register api",token)
                res.json({token})
-            }).
-            catch(err=>console.log("could not save",err))
-        }).
+            })
+            .catch(err=>console.log("could not save",err))
+        }).catch(err=>console.log('err from db'))
         
-        catch(err=>console.log('err from db'))
     } catch (error) {
         console.log('error from try-catch block')
     }
