@@ -13,14 +13,7 @@ const port = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 app.use(express.json())
-app.use(cors({
-  origin: [
-             // React local development
-    "https://empmanagersystem.netlify.app" // Your deployed frontend
-  ],
-  methods: "GET,POST,PUT,DELETE",
-  
-}));
+app.use(cors());
 
 // app.post("/register",async(req,res)=>{
 //     try{ 
