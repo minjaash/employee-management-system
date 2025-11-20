@@ -15,6 +15,9 @@ const Edit = () => {
     if (!token) return navigate('/login');
 
     axios.post(`${URI}/Employee`, { id }).then(res => {
+       if (data.hireDate) {
+    data.hireDate = data.hireDate.split("T")[0];
+  }
       setValues(res.data);
       setOriginalUser({ _id: res.data._id });
     });
