@@ -178,7 +178,7 @@ app.get("/Employees",(req,res)=>{
    
  })
 app.post("/update", async (req, res) => {
-  const { _id,uname,email,jobTitle,hireDate,department,contact } = req.body;
+  const { _id,uname,email,password,jobTitle,hireDate,department,contact } = req.body;
 
   const employee = await Employee.findById(_id);
   if (!employee) return res.status(404).json({ message: "User not found" });
