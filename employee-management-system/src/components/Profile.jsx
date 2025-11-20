@@ -31,27 +31,29 @@ const Profile = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center vh-100">
-      <div className="border p-4 rounded">
+    <div className="container mt-5">
+
+      {/* Profile section */}
+      <div className="border p-4 rounded mb-4">
         {["uname", "email", "jobTitle", "hireDate", "department", "contact"].map(key => (
           <div className="d-flex mt-2" key={key}>
-            <span><b>{key}:</b></span>
-            <span><p>{userData[key]}</p></span>
+            <strong style={{ width: "120px" }}>{key}:</strong>
+            <span>{userData[key]}</span>
           </div>
         ))}
+
+        <div className="mt-3 d-flex gap-3">
+          <button className="btn btn-danger" onClick={clickHandler}>Logout</button>
+
+          <Link to="/profile/employeeList" className="btn btn-info text-white">
+            Employees List
+          </Link>
+        </div>
       </div>
 
-      <div className="mt-3">
-        <button className="btn btn-danger" onClick={clickHandler}>Logout</button>
-      </div>
-
-      <div className="mt-3">
-        <button className="btn btn-info">
-          <Link to="/profile/employeeList" className="text-white text-decoration-none">Employees List</Link>
-        </button>
-      </div>
-
+      {/* Nested Routes Render Here */}
       <Outlet />
+
     </div>
   );
 };
