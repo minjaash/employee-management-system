@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
     <div className="App">
-     <div className='border border-3'>
+     <div className='border border-3 bg-warning'>
       <h1>Employee Management System</h1>
        <Link to="/register"><button className='btn btn primary' >Register</button></Link>
       <Link to="/login"><button className='btn btn success mxs-3' >Login</button></Link> 
