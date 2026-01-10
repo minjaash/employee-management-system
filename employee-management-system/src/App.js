@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Router>
-    <div className="App bg-tertiary">
+    <div className="App bg-secondary">
      <div className='border border-3 bg-warning'>
       <h1>Employee Management System</h1>
        <Link to="/register"><button className='btn btn primary' >Register</button></Link>
