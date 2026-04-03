@@ -194,9 +194,9 @@ app.post("/update", async (req, res) => {
   if (contact) employee.contact = contact;
 
   // Update password if provided
-  if (password && password.trim() !== "") {
-    employee.password = await bcrypt.hash(password, 10);
-  }
+//   if (password && password.trim() !== "") {
+//     employee.password = await bcrypt.hash(password, 10);
+//   }
 
   const updatedEmployee = await employee.save();
   res.json(updatedEmployee);
